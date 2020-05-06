@@ -74,7 +74,15 @@ namespace Dijkstra
             List<Node> calculated = new List<Node>();
             Node current;
             Dictionary<string,int> dict;
-           
+
+            Dictionary<string, string> paths = new Dictionary<string,string>();
+            paths.Add("a","-");
+            paths.Add("b", "-");
+            paths.Add("c", "-"); 
+            paths.Add("d", "-"); 
+            paths.Add("e", "-");
+
+
             while (pq.Count != 0)
 
             {
@@ -93,7 +101,10 @@ namespace Dijkstra
 
                     if (qContains(pq,item.Key))
                     {
-                        updateDistance(item.Key, current.distance + item.Value,pq);
+                        if (updateDistance(item.Key, current.distance + item.Value, pq))
+                        {
+                            paths[item.Key] = current.name;
+                        }
                     }
 
                 }
@@ -104,19 +115,26 @@ namespace Dijkstra
             foreach(Node  i in calculated) {
                 Console.WriteLine("{0} =  {1}", i.name, i.distance);
             }
+            foreach (KeyValuePair<string, string> item in paths)
+            {
+                Console.WriteLine(item.Key + "=>" + item.Value.ToString());
+            }
         }
 
 
 
-        static void updateDistance(string n, int d, List<Node> q)
+        static bool updateDistance(string n, int d, List<Node> q)
         {
+            bool updated = false;
             foreach (Node item in q)
                 {
                     if (item.name == n && d<item.distance)
                     {
                         item.distance = d;
+                    updated = true;
                     }
                 }
+            return updated;
         }
 
 
