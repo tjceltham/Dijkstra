@@ -119,6 +119,7 @@ namespace Dijkstra
             {
                 Console.WriteLine(item.Key + "=>" + item.Value.ToString());
             }
+            CalculatePath(paths);
         }
 
 
@@ -150,6 +151,32 @@ namespace Dijkstra
             }
 
                 return found;
+        }
+        static void CalculatePath(Dictionary<string, string> p)
+        {
+            string dnode="";
+            string node = "";
+            string path = "";
+            Stack<string> s = new Stack<string>();
+            Console.WriteLine("Enter Node");
+            dnode = Console.ReadLine();
+
+
+            while (dnode != "a")
+            {
+                s.Push(dnode);
+                dnode = p[dnode];
+
+            }
+            s.Push(dnode);
+            while (s.Count()!=0)
+            {
+                path = path + s.Pop();
+            }
+            Console.WriteLine(path);
+
+
+            
         }
     }
 }
